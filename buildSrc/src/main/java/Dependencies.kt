@@ -14,8 +14,8 @@ object Dependencies {
     object Network {
         object Ktor {
             const val CORE = "io.ktor:ktor-client-core:${Versions.KTOR_VESRION}"
-            const val SERIALIZATION = "io.ktor:ktor-client-serialization:${Versions.KTOR_VESRION}"
-
+            const val NEGOTIATION= "io.ktor:ktor-client-content-negotiation:${Versions.KTOR_VESRION}"
+            const val JSON = "io.ktor:ktor-serialization-kotlinx-json:${Versions.KTOR_VESRION}"
             object Android {
                 const val CLIENT = "io.ktor:ktor-client-android:${Versions.KTOR_VESRION}"
             }
