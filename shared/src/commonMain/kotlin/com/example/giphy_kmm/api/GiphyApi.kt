@@ -30,8 +30,8 @@ class GiphyApi {
 
     suspend fun getGifFromSearchQuery(
         query: String,
-        limit: Int? = 20,
         offset: Int? = 0,
+        limit: Int? = 25,
         rating: String? = "",
         randomId: String? = ""
     ): GifSearchResponse {
@@ -41,8 +41,14 @@ class GiphyApi {
             parameter("q", query)
             parameter("limit", limit)
             parameter("offset", offset)
-            parameter("rating", rating)
-            parameter("random_id", randomId)
+
+            if (!rating.isNullOrBlank())  {
+                parameter("rating", rating)
+            }
+
+            if (!randomId.isNullOrBlank()) {
+                parameter("random_id", randomId)
+            }
         }
 
         return response.body()

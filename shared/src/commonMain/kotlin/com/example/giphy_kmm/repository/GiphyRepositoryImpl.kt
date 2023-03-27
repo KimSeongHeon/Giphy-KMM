@@ -16,14 +16,14 @@ class GiphyRepositoryImpl(
     override fun getRandomGif(): Flow<GifEntity> {
         return remoteDataSource.getRandomGif()
             .flatMapLatest { response ->
-                flowOf(GifEntity(response.data.title, response.data.url, response.data.images.downsized.url))
+                flowOf(GifEntity(response.data.title, response.data.url, response.data.images.previewGif.url))
         }
     }
 
     override fun getGifFromSearchQuery(query: String, offset: Int): Flow<List<GifEntity>> {
         return remoteDataSource.getGifFromSearchQuery(query, offset = offset)
             .flatMapLatest { response ->
-                flowOf(response.data.map { GifEntity(it.title, it.url, it.images.downsized.url) })
+                flowOf(response.data.map { GifEntity(it.title, it.url, it.images.previewGif.url) })
             }
     }
 
