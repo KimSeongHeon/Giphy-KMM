@@ -1,5 +1,8 @@
 package com.example.giphy_kmm.data.gif
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class User(
     val avatar_url: String,
     val banner_image: String,

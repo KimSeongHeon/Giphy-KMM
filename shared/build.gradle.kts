@@ -1,9 +1,10 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.4.21"
+    kotlin("plugin.serialization")
     id("com.android.library")
     id("com.codingfeline.buildkonfig")
 }
@@ -93,7 +94,7 @@ buildkonfig {
         buildConfigField(
             Type.STRING,
             "GIPHY_API_KEY",
-            properties["api.key"].toString()
+            gradleLocalProperties(rootDir).getProperty("api.key")
         )
     }
 }

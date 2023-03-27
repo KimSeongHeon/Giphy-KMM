@@ -4,16 +4,18 @@ import com.example.giphy_kmm.BuildKonfig
 import com.example.giphy_kmm.data.gif.GifAutoTermsResponse
 import com.example.giphy_kmm.data.gif.GifResponse
 import com.example.giphy_kmm.data.gif.GifSearchResponse
+import com.example.giphy_kmm.utils.debugLog
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 
 class GiphyApi {
     private val httpClient = HttpClient {
         install(ContentNegotiation) {
-            json()
+            json(Json { ignoreUnknownKeys = true })
         }
     }
 

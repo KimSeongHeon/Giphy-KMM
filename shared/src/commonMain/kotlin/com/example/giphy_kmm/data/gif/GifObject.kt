@@ -1,5 +1,8 @@
 package com.example.giphy_kmm.data.gif
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class GifObject(
     val bitly_gif_url: String,
     val bitly_url: String,
@@ -18,6 +21,5 @@ data class GifObject(
     val trending_datetime: String,
     val type: String,
     val url: String,
-    val user: User,
     val username: String
 )
