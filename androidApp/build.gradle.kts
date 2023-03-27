@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
+    id("com.google.dagger.hilt.android")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -40,10 +42,46 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation("androidx.compose.ui:ui:1.3.1")
-    implementation("androidx.compose.ui:ui-tooling:1.3.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.3.1")
-    implementation("androidx.compose.foundation:foundation:1.3.1")
-    implementation("androidx.compose.material:material:1.3.1")
-    implementation("androidx.activity:activity-compose:1.6.1")
+    implementation(AndroidDependencies.Coroutines.COROUTINE_CORE)
+    //compose
+    implementation(AndroidDependencies.Compose.UI)
+    implementation(AndroidDependencies.Compose.ANIMATION)
+    implementation(AndroidDependencies.Compose.FOUNDATION)
+    implementation(AndroidDependencies.Compose.MATERIAL)
+    implementation(AndroidDependencies.Compose.RUNTIME)
+    implementation(AndroidDependencies.Compose.RUNTIME_RXJAVA)
+    implementation(AndroidDependencies.Compose.RUNTIME_LIVEDATA)
+    implementation(AndroidDependencies.Compose.ACTIVITY_COMPOSE)
+    implementation(AndroidDependencies.Compose.PREVIEW)
+    implementation(AndroidDependencies.Compose.VIEWBINDING)
+
+    //glide
+    implementation(AndroidDependencies.Glide.COMPOSE_GLIDE)
+
+    //rxjava
+    implementation(AndroidDependencies.RxJava.RX_JAVA)
+    implementation(AndroidDependencies.RxJava.RX_ANDROID)
+
+
+    //ktx
+    implementation(AndroidDependencies.KTX.LIFECYCLE)
+    implementation(AndroidDependencies.KTX.CORE)
+    implementation(AndroidDependencies.KTX.ACTIVITY)
+    //lifecycle
+    implementation(AndroidDependencies.Lifecycle.VIEWMODEL)
+
+    //hilt
+    implementation(AndroidDependencies.DependencyInjection.Hilt.ANDROID)
+    kapt(AndroidDependencies.DependencyInjection.Hilt.COMPILER)
+}
+
+kapt {
+    correctErrorTypes = true
+
+    javacOptions {
+        // These options are normally set automatically via the Hilt Gradle plugin, but we
+        // set them manually to workaround a bug in the Kotlin 1.5.20
+        option("-Adagger.fastInit=ENABLED")
+        option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
+    }
 }

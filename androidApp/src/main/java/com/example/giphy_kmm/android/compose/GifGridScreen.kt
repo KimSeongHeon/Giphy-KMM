@@ -1,12 +1,10 @@
 package com.example.giphy_kmm.android.compose
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -29,7 +27,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.giphy_kmm.android.model.GifUiModel
+import com.example.giphy_kmm.android.viewmodel.GifViewModel
+import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.flow.distinctUntilChanged
+import com.example.giphy_kmm.android.R
 
 private const val COLUMN_COUNT = 3
 private const val GIF_TEXT_FIELD_LABEL = "Search"
@@ -54,21 +56,23 @@ fun GifGridTitle(viewModel: GifViewModel) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GifAutoCompleteWindow(viewModel: GifViewModel) {
     val isAutoCompleteVisible = viewModel.autoTermListShow
     val autoTermList = viewModel.autoTermsList
-    val listState = rememberLazyListState()
+    val listState = rememberLazyGridState()
 
     if (isAutoCompleteVisible.value) {
         Column {
-            Button(onClick = { viewModel.hideAutoComplete()}, modifier = Modifier.align(Alignment.End)) {
+            Button(
+                onClick = { viewModel.hideAutoComplete() },
+                modifier = Modifier.align(Alignment.End)
+            ) {
                 Text(text = "X")
             }
 
             LazyVerticalGrid(
-                cells = GridCells.Fixed(COLUMN_COUNT + 1),
+                columns = GridCells.Fixed(COLUMN_COUNT + 1),
                 state = listState,
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -76,14 +80,15 @@ fun GifAutoCompleteWindow(viewModel: GifViewModel) {
                     Text(
                         buildAnnotatedString {
                             withStyle(style = SpanStyle(color = Color.Blue)) {
-                                append(term)
+                                append(term.name)
                             }
                         },
                         textAlign = TextAlign.Center,
                         fontFamily = FontFamily.Serif,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.clickable { viewModel.updateSearchQuery(term) },
-                        maxLines = 1)
+                        modifier = Modifier.clickable { viewModel.updateSearchQuery(term.name) },
+                        maxLines = 1
+                    )
                 }
             }
         }
@@ -94,7 +99,7 @@ fun GifAutoCompleteWindow(viewModel: GifViewModel) {
 fun GifSearchBox(viewModel: GifViewModel) {
     var text by remember { viewModel.searchQuery }
     val searchModeText by viewModel.searchMode
-    
+
     Column {
         Row {
             TextField(
@@ -105,7 +110,12 @@ fun GifSearchBox(viewModel: GifViewModel) {
                     viewModel.updateSearchQuery(it)
                 },
                 label = { Text(GIF_TEXT_FIELD_LABEL) },
-                leadingIcon = { Icon(imageVector = Icons.Filled.Search, contentDescription = null) },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = null
+                    )
+                },
                 modifier = Modifier
                     .weight(weight = 1.0F, fill = true)
                     .testTag("TextField"),
@@ -119,21 +129,20 @@ fun GifSearchBox(viewModel: GifViewModel) {
                 Text(text = searchModeText.name)
             }
         }
-        
+
         GifAutoCompleteWindow(viewModel = viewModel)
     }
-    
+
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GifMainLayout(viewModel: GifViewModel) {
-    val gifObjects = viewModel.gifList
+    val gifObjects = viewModel.gifListStateFlow.collectAsState()
 
-    if (gifObjects.isEmpty()) {
+    if (gifObjects.value.isEmpty()) {
         GifLoadingLayout()
     } else {
-        GifMainLayout(gifObjects, viewModel)
+        GifMainLayout(gifObjects.value, viewModel)
     }
 }
 
@@ -142,19 +151,18 @@ fun GifLoadingLayout() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = CenterHorizontally
     ) {
         CircularProgressIndicator(modifier = Modifier.wrapContentWidth(CenterHorizontally))
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GifMainLayout(gifObjects: List<GifObject>, viewModel: GifViewModel) {
-    val listState = rememberLazyListState()
+fun GifMainLayout(gifObjects: List<GifUiModel>, viewModel: GifViewModel) {
+    val listState = rememberLazyGridState()
 
     LazyVerticalGrid(
-        cells = GridCells.Fixed(COLUMN_COUNT),
+        columns = GridCells.Fixed(COLUMN_COUNT),
         state = listState
     ) {
         itemsIndexed(gifObjects) { index, gifObject ->
@@ -164,12 +172,13 @@ fun GifMainLayout(gifObjects: List<GifObject>, viewModel: GifViewModel) {
 
     EndlessListHandler(listState = listState, buffer = 2) {
         val searchOffset = gifObjects.size / GIF_SEARCH_LIMIT_COUNT
+        Log.d(":::", searchOffset.toString())
         viewModel.loadMoreItem(searchOffset)
     }
 }
 
 @Composable
-fun EndlessListHandler(listState: LazyListState, buffer: Int, callback: () -> Unit) {
+fun EndlessListHandler(listState: LazyGridState, buffer: Int, callback: () -> Unit) {
     val loadMore = remember {
         derivedStateOf {
             val layoutInfo = listState.layoutInfo
@@ -190,18 +199,18 @@ fun EndlessListHandler(listState: LazyListState, buffer: Int, callback: () -> Un
 }
 
 @Composable
-fun GifGridItems(viewModel: GifViewModel, index: Int, gifObject: GifObject) {
+fun GifGridItems(viewModel: GifViewModel, index: Int, gifUiModel: GifUiModel) {
     val inVisible = viewModel.inVisibleList[index]
     GlideImage(
         alpha = if (inVisible) 1f else 0f,
-        imageModel = gifObject.images.downsized.url,
-        placeHolder = ImageVector.vectorResource(id = R.drawable.ic_launcher_foreground),
+        imageModel = gifUiModel.downsizedUrl,
+        placeHolder = ImageVector.vectorResource(id = R.drawable.baseline_place_24),
         modifier = Modifier
             .height(150.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
-                        viewModel.downloadGif(gifObject.images.downsized.url, gifObject.title)
+                        viewModel.downloadGif(gifUiModel.downsizedUrl, gifUiModel.title)
                     }
                 )
             }
