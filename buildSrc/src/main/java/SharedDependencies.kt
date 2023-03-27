@@ -1,4 +1,4 @@
-object Dependencies {
+object SharedDependencies {
     object Coroutines {
         const val COROUTINE_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINE_VERSION}"
     }
@@ -24,5 +24,9 @@ object Dependencies {
                 const val CLIENT = "io.ktor:ktor-client-ios:${Versions.KTOR_VESRION}"
             }
         }
+    }
+
+    object Log {
+        const val LoggerFactory = "com.truthbean.logger:slf4j:0.0.1-RELEASE"
     }
 }

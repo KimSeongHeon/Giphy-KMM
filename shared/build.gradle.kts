@@ -30,13 +30,13 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Dependencies.Coroutines.COROUTINE_CORE)
-                implementation(Dependencies.DependencyInjection.KOIN.CORE)
+                implementation(SharedDependencies.Coroutines.COROUTINE_CORE)
+                implementation(SharedDependencies.DependencyInjection.KOIN.CORE)
 
                 //network
-                implementation(Dependencies.Network.Ktor.CORE)
-                implementation(Dependencies.Network.Ktor.JSON)
-                implementation(Dependencies.Network.Ktor.NEGOTIATION)
+                implementation(SharedDependencies.Network.Ktor.CORE)
+                implementation(SharedDependencies.Network.Ktor.JSON)
+                implementation(SharedDependencies.Network.Ktor.NEGOTIATION)
             }
         }
         val commonTest by getting {
@@ -46,7 +46,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependencies.Network.Ktor.Android.CLIENT)
+                implementation(SharedDependencies.Network.Ktor.Android.CLIENT)
+                implementation(SharedDependencies.Log.LoggerFactory)
             }
         }
         val androidUnitTest by getting
@@ -59,7 +60,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation(Dependencies.Network.Ktor.iOS.CLIENT)
+                implementation(SharedDependencies.Network.Ktor.iOS.CLIENT)
             }
         }
         val iosX64Test by getting
