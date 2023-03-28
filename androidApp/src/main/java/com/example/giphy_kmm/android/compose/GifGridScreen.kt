@@ -172,7 +172,6 @@ fun GifMainLayout(gifObjects: List<GifUiModel>, viewModel: GifViewModel) {
 
     EndlessListHandler(listState = listState, buffer = 2) {
         val searchOffset = gifObjects.size / GIF_SEARCH_LIMIT_COUNT
-        Log.d(":::", searchOffset.toString())
         viewModel.loadMoreItem(searchOffset)
     }
 }
@@ -200,11 +199,9 @@ fun EndlessListHandler(listState: LazyGridState, buffer: Int, callback: () -> Un
 
 @Composable
 fun GifGridItems(viewModel: GifViewModel, index: Int, gifUiModel: GifUiModel) {
-    val inVisible = viewModel.inVisibleList[index]
     GlideImage(
-        alpha = if (inVisible) 1f else 0f,
         imageModel = gifUiModel.downsizedUrl,
-        placeHolder = ImageVector.vectorResource(id = R.drawable.baseline_place_24),
+        placeHolder = ImageVector.vectorResource(id = R.drawable.baseline_downloading_24),
         modifier = Modifier
             .height(150.dp)
             .pointerInput(Unit) {

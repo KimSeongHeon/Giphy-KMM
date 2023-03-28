@@ -40,7 +40,6 @@ class GifViewModel @Inject constructor(
     val autoTermsList = mutableStateListOf<GifAutoCompleteUiModel>()
     val autoTermListShow = mutableStateOf(false)
     val searchMode = mutableStateOf(SearchMode.DEBOUNCING)
-    val inVisibleList = List(TWINKLE_LIST_SIZE) { true }.toMutableStateList()
 
     private val throttlingBehaviorSubject = BehaviorSubject.create<String>()
     private val debounceBehaviorSubject = BehaviorSubject.create<String>()
@@ -143,10 +142,9 @@ class GifViewModel @Inject constructor(
         queryApiJob = viewModelScope.launch {
             giphyEngine.getGifFromSearchQuery(query, searchOffset)
                 .collectLatest { newList ->
-                    Log.d(":::", newList.toString())
                     val newUiModelList =
                         newList.map { GifUiModel(it.title, it.url, it.downsizedUrl) }
-                    _gifListStateFlow.value = newUiModelList
+                    _gifListStateFlow.emit(gifListStateFlow.value + newUiModelList)
                 }
         }
     }
