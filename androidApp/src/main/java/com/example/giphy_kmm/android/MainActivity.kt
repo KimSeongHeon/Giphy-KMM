@@ -1,6 +1,5 @@
 package com.example.giphy_kmm.android
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,12 +15,12 @@ import androidx.compose.ui.Modifier
 import com.example.giphy_kmm.android.compose.GifGridTitle
 import com.example.giphy_kmm.android.compose.GifMainLayout
 import com.example.giphy_kmm.android.compose.GifSearchBox
-import com.example.giphy_kmm.android.viewmodel.GifViewModel
+import com.example.giphy_kmm.android.viewmodel.GiphyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val gifViewModel: GifViewModel by viewModels()
+    private val gifViewModel: GiphyViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()

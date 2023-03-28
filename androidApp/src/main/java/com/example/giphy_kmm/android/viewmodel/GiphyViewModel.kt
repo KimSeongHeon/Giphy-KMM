@@ -1,9 +1,7 @@
 package com.example.giphy_kmm.android.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -22,7 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
-class GifViewModel @Inject constructor(
+class GiphyViewModel @Inject constructor(
     private val giphyEngine: GiphySharedEngine
 ) : BaseViewModel() {
     private var randomApiJob: Job? = null

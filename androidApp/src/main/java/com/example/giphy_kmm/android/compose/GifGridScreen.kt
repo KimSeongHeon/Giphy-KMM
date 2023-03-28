@@ -1,6 +1,5 @@
 package com.example.giphy_kmm.android.compose
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -28,7 +27,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.giphy_kmm.android.model.GifUiModel
-import com.example.giphy_kmm.android.viewmodel.GifViewModel
+import com.example.giphy_kmm.android.viewmodel.GiphyViewModel
 import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.flow.distinctUntilChanged
 import com.example.giphy_kmm.android.R
@@ -38,7 +37,7 @@ private const val GIF_TEXT_FIELD_LABEL = "Search"
 private const val GIF_SEARCH_LIMIT_COUNT = 25
 
 @Composable
-fun GifGridTitle(viewModel: GifViewModel) {
+fun GifGridTitle(viewModel: GiphyViewModel) {
     //compose Text : https://developer.android.com/jetpack/compose/text
     val title by viewModel.gridTitle.observeAsState()
 
@@ -57,7 +56,7 @@ fun GifGridTitle(viewModel: GifViewModel) {
 }
 
 @Composable
-fun GifAutoCompleteWindow(viewModel: GifViewModel) {
+fun GifAutoCompleteWindow(viewModel: GiphyViewModel) {
     val isAutoCompleteVisible = viewModel.autoTermListShow
     val autoTermList = viewModel.autoTermsList
     val listState = rememberLazyGridState()
@@ -96,7 +95,7 @@ fun GifAutoCompleteWindow(viewModel: GifViewModel) {
 }
 
 @Composable
-fun GifSearchBox(viewModel: GifViewModel) {
+fun GifSearchBox(viewModel: GiphyViewModel) {
     var text by remember { viewModel.searchQuery }
     val searchModeText by viewModel.searchMode
 
@@ -136,7 +135,7 @@ fun GifSearchBox(viewModel: GifViewModel) {
 }
 
 @Composable
-fun GifMainLayout(viewModel: GifViewModel) {
+fun GifMainLayout(viewModel: GiphyViewModel) {
     val gifObjects = viewModel.gifListStateFlow.collectAsState()
 
     if (gifObjects.value.isEmpty()) {
@@ -158,7 +157,7 @@ fun GifLoadingLayout() {
 }
 
 @Composable
-fun GifMainLayout(gifObjects: List<GifUiModel>, viewModel: GifViewModel) {
+fun GifMainLayout(gifObjects: List<GifUiModel>, viewModel: GiphyViewModel) {
     val listState = rememberLazyGridState()
 
     LazyVerticalGrid(
@@ -198,7 +197,7 @@ fun EndlessListHandler(listState: LazyGridState, buffer: Int, callback: () -> Un
 }
 
 @Composable
-fun GifGridItems(viewModel: GifViewModel, index: Int, gifUiModel: GifUiModel) {
+fun GifGridItems(viewModel: GiphyViewModel, index: Int, gifUiModel: GifUiModel) {
     GlideImage(
         imageModel = gifUiModel.downsizedUrl,
         placeHolder = ImageVector.vectorResource(id = R.drawable.baseline_downloading_24),
