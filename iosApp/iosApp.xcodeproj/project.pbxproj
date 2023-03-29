@@ -18,6 +18,7 @@
 		CEBB05DA29D300B9008087EC /* GifAutoCompleteUiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05D929D300B9008087EC /* GifAutoCompleteUiModel.swift */; };
 		CEBB05DF29D30449008087EC /* UIGifImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05DE29D30449008087EC /* UIGifImage.swift */; };
 		CEBB05E729D3D1FB008087EC /* Disposebag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05E629D3D1FB008087EC /* Disposebag.swift */; };
+		CEBB05EB29D3E52B008087EC /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05EA29D3E52B008087EC /* UIImageExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +49,7 @@
 		CEBB05D929D300B9008087EC /* GifAutoCompleteUiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifAutoCompleteUiModel.swift; sourceTree = "<group>"; };
 		CEBB05DE29D30449008087EC /* UIGifImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGifImage.swift; sourceTree = "<group>"; };
 		CEBB05E629D3D1FB008087EC /* Disposebag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disposebag.swift; sourceTree = "<group>"; };
+		CEBB05EA29D3E52B008087EC /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		FFF1275D6942D74C68C95DB8 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -143,6 +145,7 @@
 		CEBB05DB29D303EF008087EC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CEBB05EA29D3E52B008087EC /* UIImageExtension.swift */,
 				CEBB05E629D3D1FB008087EC /* Disposebag.swift */,
 			);
 			path = Utils;
@@ -286,6 +289,7 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				CEBB05DF29D30449008087EC /* UIGifImage.swift in Sources */,
 				CEBB05DA29D300B9008087EC /* GifAutoCompleteUiModel.swift in Sources */,
+				CEBB05EB29D3E52B008087EC /* UIImageExtension.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				CEBB05D529D2FAB7008087EC /* SearchMode.swift in Sources */,
 				CEB1A6FF29D28FC000ADCB12 /* GiphyViewModel.swift in Sources */,
