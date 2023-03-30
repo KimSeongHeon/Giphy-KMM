@@ -12,11 +12,13 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		862C9AEF91FE23D04F1D62A9 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF1275D6942D74C68C95DB8 /* Pods_iosApp.framework */; };
+		CE09F5B529D404AF00B0205E /* UIGIFImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE09F5B429D404AF00B0205E /* UIGIFImage.swift */; };
+		CE9C4EFE29D430B400B7B876 /* GIFImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C4EFD29D430B400B7B876 /* GIFImage.swift */; };
+		CE9C4F0029D4405100B7B876 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9C4EFF29D4405100B7B876 /* ViewExtension.swift */; };
 		CEB1A6FF29D28FC000ADCB12 /* GiphyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1A6FE29D28FC000ADCB12 /* GiphyViewModel.swift */; };
 		CEBB05D529D2FAB7008087EC /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05D429D2FAB7008087EC /* SearchMode.swift */; };
 		CEBB05D829D30025008087EC /* GifUiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05D729D30025008087EC /* GifUiModel.swift */; };
 		CEBB05DA29D300B9008087EC /* GifAutoCompleteUiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05D929D300B9008087EC /* GifAutoCompleteUiModel.swift */; };
-		CEBB05DF29D30449008087EC /* UIGifImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05DE29D30449008087EC /* UIGifImage.swift */; };
 		CEBB05E729D3D1FB008087EC /* Disposebag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05E629D3D1FB008087EC /* Disposebag.swift */; };
 		CEBB05EB29D3E52B008087EC /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB05EA29D3E52B008087EC /* UIImageExtension.swift */; };
 /* End PBXBuildFile section */
@@ -43,11 +45,13 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B727D1A245C9207AD4E414F2 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
+		CE09F5B429D404AF00B0205E /* UIGIFImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGIFImage.swift; sourceTree = "<group>"; };
+		CE9C4EFD29D430B400B7B876 /* GIFImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImage.swift; sourceTree = "<group>"; };
+		CE9C4EFF29D4405100B7B876 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		CEB1A6FE29D28FC000ADCB12 /* GiphyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyViewModel.swift; sourceTree = "<group>"; };
 		CEBB05D429D2FAB7008087EC /* SearchMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMode.swift; sourceTree = "<group>"; };
 		CEBB05D729D30025008087EC /* GifUiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifUiModel.swift; sourceTree = "<group>"; };
 		CEBB05D929D300B9008087EC /* GifAutoCompleteUiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifAutoCompleteUiModel.swift; sourceTree = "<group>"; };
-		CEBB05DE29D30449008087EC /* UIGifImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGifImage.swift; sourceTree = "<group>"; };
 		CEBB05E629D3D1FB008087EC /* Disposebag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disposebag.swift; sourceTree = "<group>"; };
 		CEBB05EA29D3E52B008087EC /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		FFF1275D6942D74C68C95DB8 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,7 +131,7 @@
 			children = (
 				7555FF82242A565900829871 /* ContentView.swift */,
 				CEB1A6FE29D28FC000ADCB12 /* GiphyViewModel.swift */,
-				CEBB05DE29D30449008087EC /* UIGifImage.swift */,
+				CE9C4EFD29D430B400B7B876 /* GIFImage.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -147,6 +151,8 @@
 			children = (
 				CEBB05EA29D3E52B008087EC /* UIImageExtension.swift */,
 				CEBB05E629D3D1FB008087EC /* Disposebag.swift */,
+				CE09F5B429D404AF00B0205E /* UIGIFImage.swift */,
+				CE9C4EFF29D4405100B7B876 /* ViewExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -284,11 +290,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9C4EFE29D430B400B7B876 /* GIFImage.swift in Sources */,
+				CE09F5B529D404AF00B0205E /* UIGIFImage.swift in Sources */,
 				CEBB05E729D3D1FB008087EC /* Disposebag.swift in Sources */,
 				CEBB05D829D30025008087EC /* GifUiModel.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				CEBB05DF29D30449008087EC /* UIGifImage.swift in Sources */,
 				CEBB05DA29D300B9008087EC /* GifAutoCompleteUiModel.swift in Sources */,
+				CE9C4F0029D4405100B7B876 /* ViewExtension.swift in Sources */,
 				CEBB05EB29D3E52B008087EC /* UIImageExtension.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				CEBB05D529D2FAB7008087EC /* SearchMode.swift in Sources */,

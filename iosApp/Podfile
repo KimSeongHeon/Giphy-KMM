@@ -6,5 +6,4 @@ target 'iosApp' do
   use_frameworks!
 
   # Pods for iosApp
-  pod 'Swinject', '2.7.1'
 end

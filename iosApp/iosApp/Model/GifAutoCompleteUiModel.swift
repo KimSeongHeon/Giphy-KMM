@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct GifAutoCompleteUiModel {
+struct GifAutoCompleteUiModel: Hashable {
     var name: String
 }

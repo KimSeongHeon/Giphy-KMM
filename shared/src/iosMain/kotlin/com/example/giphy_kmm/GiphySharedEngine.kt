@@ -18,7 +18,6 @@ actual class GiphySharedEngine {
         repository = koinApp.koin.get()
     }
 
-    @Throws(Exception::class)
     actual fun getRandomGif(): Flow<GifEntity> = CFlow(repository.getRandomGif())
 
     actual fun getGifFromSearchQuery(
