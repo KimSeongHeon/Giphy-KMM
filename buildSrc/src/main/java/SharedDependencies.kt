@@ -23,6 +23,10 @@ object SharedDependencies {
             object iOS {
                 const val CLIENT = "io.ktor:ktor-client-ios:${Versions.KTOR_VESRION}"
             }
+
+            object JS {
+                const val CLEINT = "io.ktor:ktor-client-js:${Versions.KTOR_VESRION}"
+            }
         }
     }
 

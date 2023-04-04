@@ -17,6 +17,10 @@ kotlin {
             }
         }
     }
+    js(IR) {
+        useCommonJs()
+        browser()
+    }
 
     listOf(
         iosX64(),
@@ -72,6 +76,12 @@ kotlin {
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
+        }
+        val jsMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(SharedDependencies.Network.Ktor.JS.CLEINT)
+            }
         }
     }
 }
