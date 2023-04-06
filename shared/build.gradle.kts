@@ -10,6 +10,7 @@ plugins {
 }
 
 kotlin {
+    //for android
     android {
         compilations.all {
             kotlinOptions {
@@ -17,11 +18,14 @@ kotlin {
             }
         }
     }
+
+    //for js
     js(IR) {
         useCommonJs()
         browser()
     }
 
+    //for ios
     listOf(
         iosX64(),
         iosArm64(),
@@ -31,6 +35,10 @@ kotlin {
             baseName = "shared"
         }
     }
+
+    //for desktop
+    jvm()
+//    macosArm64("macOS")
 
     sourceSets {
         val commonMain by getting {
@@ -81,6 +89,12 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(SharedDependencies.Network.Ktor.JS.CLEINT)
+            }
+        }
+        val jvmMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(SharedDependencies.Network.Ktor.JVM.CLIENT)
             }
         }
     }
