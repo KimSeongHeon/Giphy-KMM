@@ -19,3 +19,4 @@ rootProject.name = "Giphy-KMM"
 include(":androidApp")
 include(":shared")
 include(":compose_web")
+include(":compose_desktop")
