@@ -11,4 +11,8 @@ interface DataSource {
     fun getGifFromSearchQuery(query: String, offset: Int): Flow<GifSearchResponse>
 
     fun getAutoCompleteTerms(query: String): Flow<GifAutoTermsResponse>
+
+    fun loadScrapGifs(): Flow<GifResponse>
+
+    fun setScrap(id: String, scrap: Boolean)
 }

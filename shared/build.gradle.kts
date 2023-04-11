@@ -7,6 +7,7 @@ plugins {
     kotlin("plugin.serialization")
     id("com.android.library")
     id("com.codingfeline.buildkonfig")
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
@@ -127,6 +128,13 @@ buildkonfig {
             "GIPHY_API_KEY",
             gradleLocalProperties(rootDir).getProperty("api.key")
         )
+    }
+}
+
+sqldelight {
+    //AppDB.sq file
+    database("AppDB") {
+        packageName = "com.example.giphy_kmm.shared"
     }
 }
 
