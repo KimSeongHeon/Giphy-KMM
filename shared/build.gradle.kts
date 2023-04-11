@@ -50,6 +50,9 @@ kotlin {
                 implementation(SharedDependencies.Network.Ktor.CORE)
                 implementation(SharedDependencies.Network.Ktor.JSON)
                 implementation(SharedDependencies.Network.Ktor.NEGOTIATION)
+
+                //db
+                implementation(SharedDependencies.SqlDelight.RUNTIME)
             }
         }
         val commonTest by getting {
@@ -61,6 +64,7 @@ kotlin {
             dependencies {
                 implementation(SharedDependencies.Network.Ktor.Android.CLIENT)
                 implementation(SharedDependencies.Log.LoggerFactory)
+                implementation(SharedDependencies.SqlDelight.Android.DRIVER)
             }
         }
         val androidUnitTest by getting
@@ -74,6 +78,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(SharedDependencies.Network.Ktor.iOS.CLIENT)
+                implementation(SharedDependencies.SqlDelight.Native.DRIVER)
             }
         }
         val iosX64Test by getting
@@ -89,12 +94,14 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(SharedDependencies.Network.Ktor.JS.CLEINT)
+                implementation(SharedDependencies.SqlDelight.JS.DRIVER)
             }
         }
         val jvmMain by getting {
             dependsOn(commonMain)
             dependencies {
                 implementation(SharedDependencies.Network.Ktor.JVM.CLIENT)
+                implementation(SharedDependencies.SqlDelight.JVM.DRIVER)
             }
         }
     }

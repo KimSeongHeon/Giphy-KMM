@@ -37,4 +37,24 @@ object SharedDependencies {
     object Log {
         const val LoggerFactory = "com.truthbean.logger:slf4j:0.0.1-RELEASE"
     }
+
+    object SqlDelight {
+        const val RUNTIME = "com.squareup.sqldelight:runtime:${Versions.SQLDELIGHT_VERSION}"
+
+        object Android {
+            const val DRIVER = "com.squareup.sqldelight:android-driver:${Versions.SQLDELIGHT_VERSION}"
+        }
+
+        object Native {
+            const val DRIVER = "com.squareup.sqldelight:native-driver:${Versions.SQLDELIGHT_VERSION}"
+        }
+
+        object JS {
+            const val DRIVER = "com.squareup.sqldelight:sqljs-driver:${Versions.SQLDELIGHT_VERSION}"
+        }
+
+        object JVM {
+            const val DRIVER = "com.squareup.sqldelight:sqlite-driver:${Versions.SQLDELIGHT_VERSION}"
+        }
+    }
 }
