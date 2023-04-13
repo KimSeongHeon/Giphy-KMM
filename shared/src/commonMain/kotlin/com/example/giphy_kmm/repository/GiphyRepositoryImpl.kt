@@ -11,7 +11,8 @@ import kotlinx.coroutines.flow.flowOf
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GiphyRepositoryImpl(
-    private val remoteDataSource: DataSource
+    private val remoteDataSource: DataSource,
+    private val localDataSource: DataSource
 ): GiphyRepository {
     override fun getRandomGif(): Flow<GifEntity> {
         return remoteDataSource.getRandomGif()
