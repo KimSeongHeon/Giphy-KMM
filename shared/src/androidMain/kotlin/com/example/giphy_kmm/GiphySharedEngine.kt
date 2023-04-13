@@ -1,7 +1,7 @@
 package com.example.giphy_kmm
 
-import android.app.Application
 import android.content.Context
+import com.example.giphy_kmm.di.dbDriverModule
 import com.example.giphy_kmm.di.giphyModule
 import com.example.giphy_kmm.domain.entity.AutoCompleteEntity
 import com.example.giphy_kmm.domain.entity.GifEntity
@@ -15,7 +15,7 @@ actual class GiphySharedEngine(appContext: Context) {
 
     init {
         val koinApp =
-            koinApplication { modules(giphyModule) }.modules(module { single { appContext } })
+            koinApplication { modules(giphyModule, dbDriverModule) }.modules(module { single { appContext } })
         repository = koinApp.koin.get()
     }
 

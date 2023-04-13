@@ -1,5 +1,6 @@
 package com.example.giphy_kmm
 
+import com.example.giphy_kmm.di.dbDriverModule
 import com.example.giphy_kmm.di.giphyModule
 import com.example.giphy_kmm.domain.entity.AutoCompleteEntity
 import com.example.giphy_kmm.domain.entity.GifEntity
@@ -13,7 +14,7 @@ actual class GiphySharedEngine {
 
     init {
         val koinApp =
-            koinApplication { modules(giphyModule) }
+            koinApplication { modules(giphyModule, dbDriverModule) }
 
         repository = koinApp.koin.get()
     }
