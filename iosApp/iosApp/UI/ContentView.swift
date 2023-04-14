@@ -1,5 +1,6 @@
 import SwiftUI
 import shared
+import SwiftUISnackbar
 
 struct ContentView: View {
     @StateObject var giphyViewModel: GiphyViewModel = GiphyViewModel()
@@ -7,10 +8,28 @@ struct ContentView: View {
     let greet = Greeting().greet()
     
     var body: some View {
+        TabView {
+            GiphyMainLayout(giphyViewModel: giphyViewModel)
+                .tabItem {
+                    Text("Main")
+                }
+            
+            GiphyScrapLayout(giphyViewModel: giphyViewModel)
+                .tabItem {
+                    Text("Scrap")
+                }
+        }
+    }
+}
+
+struct GiphyMainLayout: View {
+    @StateObject var giphyViewModel: GiphyViewModel
+    
+    var body: some View {
         VStack() {
-            GiphyTitleView(viewModel: giphyViewModel)
+            GiphyMainTitleView(viewModel: giphyViewModel)
             GiphySearchView(viewModel: giphyViewModel)
-            GiphyGridView(viewModel: giphyViewModel)
+            GiphyMainGridView(viewModel: giphyViewModel)
             Spacer()
         }.onAppear {
             giphyViewModel.initViewModel()
@@ -18,11 +37,38 @@ struct ContentView: View {
     }
 }
 
-struct GiphyTitleView: View {
+struct GiphyScrapLayout: View {
+    @StateObject var giphyViewModel: GiphyViewModel
+    
+    var body: some View {
+        VStack() {
+            GiphyScrapTitleView(viewModel: giphyViewModel)
+            GiphyScrapGridView(viewModel: giphyViewModel)
+            Spacer()
+        }.onAppear {
+            giphyViewModel.getScrapGifs()
+        }
+    }
+}
+
+struct GiphyMainTitleView: View {
     @StateObject var viewModel: GiphyViewModel
     
     var body: some View {
         Text(viewModel.giphyTitle)
+            .lineLimit(1)
+            .multilineTextAlignment(.center)
+            .font(.title)
+            .foregroundColor(.black)
+            .padding()
+    }
+}
+
+struct GiphyScrapTitleView: View {
+    @StateObject var viewModel: GiphyViewModel
+    
+    var body: some View {
+        Text(String(viewModel.scrapGifList.count) + " ScrapGifs")
             .lineLimit(1)
             .multilineTextAlignment(.center)
             .font(.title)
@@ -96,22 +142,53 @@ struct GiphyAutoCompleteView: View {
 
 }
 
-struct GiphyGridView: View {
+struct GiphyMainGridView: View {
     @StateObject var viewModel: GiphyViewModel
+    @State var snackbarShow: Bool = false
     
-    
+    var body: some View {
+        GeometryReader {_ in
+            ScrollView {
+                LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
+                    ForEach(viewModel.gifList, id: \.self) { uiModel in
+                        GiphyGridItem(uiModel: uiModel)
+                            .frame(width: 150, height: 150)
+                            .background(Color(.secondarySystemBackground))
+                            .onTapGesture(count: 2){
+                                snackbarShow = true
+                                viewModel.addScrap(uiModel: uiModel)
+                            }
+                    }
+                }
+            }
+            .snackbar(isShowing: $snackbarShow, title: "Complete Scrap!", style: SnackbarStyle.default)
+        }
+        
+    }
+}
+
+struct GiphyScrapGridView: View {
+    @StateObject var viewModel: GiphyViewModel
+    @State var snackbarShow: Bool = false
+
     var body: some View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
-                ForEach(viewModel.gifList, id: \.self) { uiModel in
+                ForEach(viewModel.scrapGifList, id: \.self) { uiModel in
                     GiphyGridItem(uiModel: uiModel)
                         .frame(width: 150, height: 150)
                         .background(Color(.secondarySystemBackground))
+                        .onTapGesture(count: 2){
+                            snackbarShow = true
+                            viewModel.removeScrap(uiModel: uiModel)
+                            viewModel.getScrapGifs()
+                        }
                 }
             }
-        }
+        }.snackbar(isShowing: $snackbarShow, title: "Remove Scrap!", style: SnackbarStyle.default)
     }
 }
+
 
 struct GiphyGridItem: View {
     @State private var imageData: Data? = nil

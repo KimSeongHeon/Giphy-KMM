@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct GifUiModel: Hashable {    
+struct GifUiModel: Hashable {
+    var id: String
     var title: String
     var url: String
     var downsizedUrl: String

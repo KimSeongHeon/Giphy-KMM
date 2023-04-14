@@ -29,6 +29,8 @@ public class GiphyViewModel: ObservableObject {
     @Published
     var gifList: [GifUiModel] = []
     @Published
+    var scrapGifList: [GifUiModel] = []
+    @Published
     var autoCompleteList: [GifAutoCompleteUiModel] = []
     @Published
     var autoCompleteListVisibility: ViewVisibility = .gone
@@ -103,7 +105,7 @@ public class GiphyViewModel: ObservableObject {
                     return
                 }
                 if let entity = gifEntity {
-                    self.gifList.append(GifUiModel(title: entity.title, url: entity.url, downsizedUrl: entity.downsizedUrl))
+                    self.gifList.append(GifUiModel(id: entity.id, title: entity.title, url: entity.url, downsizedUrl: entity.downsizedUrl))
                 }
             }.store(in: disposeBag)
     }
@@ -113,7 +115,7 @@ public class GiphyViewModel: ObservableObject {
             .watch { (array: NSArray?) in
                 if let gifEntityList = array as? [GifEntity] {
                     self.gifList.append(contentsOf: gifEntityList.map { entity in
-                        return GifUiModel(title: entity.title , url: entity.url, downsizedUrl: entity.downsizedUrl)
+                        return GifUiModel(id: entity.id, title: entity.title , url: entity.url, downsizedUrl: entity.downsizedUrl)
                     })
                 }
             }.store(in: disposeBag)
@@ -130,6 +132,29 @@ public class GiphyViewModel: ObservableObject {
                     }
                 }
             }.store(in: disposeBag)
+    }
+    
+    func getScrapGifs() {
+        (giphySharedEngine.getScrapGifs() as! CFlow<NSArray>)
+            .watch { (array: NSArray?) in
+                self.scrapGifList.removeAll()
+
+                if let entityList = array as? [GifEntity] {
+                    self.scrapGifList.append(contentsOf: entityList.map { entity in
+                        return GifUiModel(id: entity.id, title: entity.title , url: entity.url, downsizedUrl: entity.downsizedUrl)
+                    })
+                }
+            }
+    }
+    
+    func addScrap(uiModel: GifUiModel) {
+        let gifEntity = GifEntity(id: uiModel.id, title: uiModel.title, url: uiModel.url, downsizedUrl: uiModel.downsizedUrl)
+        giphySharedEngine.addScrap(gifEntity: gifEntity)
+    }
+    
+    func removeScrap(uiModel: GifUiModel) {
+        let gifEntity = GifEntity(id: uiModel.id, title: uiModel.title, url: uiModel.url, downsizedUrl: uiModel.downsizedUrl)
+        giphySharedEngine.removeScrap(gifEntity: gifEntity)
     }
     
     private func clearPreviousSearchResult() {
