@@ -18,6 +18,5 @@ class LocalDataSource(private val database: Database): DataSource {
 
     override fun loadScrapGifs(): Flow<List<ScrapGifModel>> = database.loadScrapGifs()
 
-
-    override fun setScrap(id: String, scrap: Boolean) = database.setScrap(id, scrap)
+    override fun setScrap(model: ScrapGifModel, scrap: Boolean) = database.setScrap(model, scrap)
 }

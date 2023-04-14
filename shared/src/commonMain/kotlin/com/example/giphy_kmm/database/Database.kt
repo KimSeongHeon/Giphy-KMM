@@ -1,8 +1,9 @@
 package com.example.giphy_kmm.database
 
-import com.example.giphy_kmm.data.gif.GifResponse
 import com.example.giphy_kmm.data.scrap.ScrapGifModel
 import com.example.giphy_kmm.shared.AppDB
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
 import comexamplegiphykmm.shared.AppDBQueries
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +22,22 @@ class Database(private val databaseDriverFactory: DatabaseDriverFactory) {
     }
 
     internal fun loadScrapGifs(): Flow<List<ScrapGifModel>> {
-        dbQuery.
+        return dbQuery.loadScrapLists { id, url, downsizedUrl ->
+            mapGifs(id, url, downsizedUrl)
+        }.asFlow().mapToList()
     }
 
-    internal fun setScrap(id: String, scrap: Boolean) {
-
+    internal fun setScrap(model: ScrapGifModel, scrap: Boolean) {
+        if (scrap) {
+            dbQuery.insertScrapTable(model.id, model.url, model.downSizedUrl)
+        } else {
+            dbQuery.deleteScrapTable(model.id)
+        }
     }
 
+    private fun mapGifs(
+        id: String,
+        url: String,
+        downsizedUrl: String
+    ): ScrapGifModel = ScrapGifModel(id, url, downsizedUrl)
 }

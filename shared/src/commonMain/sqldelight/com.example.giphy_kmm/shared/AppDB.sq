@@ -1,0 +1,18 @@
+CREATE TABLE ScrapTable (
+id TEXT NOT NULL PRIMARY KEY,
+url TEXT NOT NULL,
+downsizedUrl TEXT NOT NULL
+);
+
+loadScrapLists:
+SELECT *
+FROM ScrapTable;
+
+insertScrapTable:
+INSERT INTO ScrapTable (id, url, downsizedUrl)
+VALUES(?, ?, ?);
+
+deleteScrapTable:
+DELETE FROM ScrapTable
+WHERE id = :selectedId;
+

@@ -40,7 +40,8 @@ object SharedDependencies {
 
     object SqlDelight {
         const val RUNTIME = "com.squareup.sqldelight:runtime:${Versions.SQLDELIGHT_VERSION}"
-
+        const val COROUTINEEXT =
+            "com.squareup.sqldelight:coroutines-extensions:${Versions.SQLDELIGHT_VERSION}"
         object Android {
             const val DRIVER = "com.squareup.sqldelight:android-driver:${Versions.SQLDELIGHT_VERSION}"
         }

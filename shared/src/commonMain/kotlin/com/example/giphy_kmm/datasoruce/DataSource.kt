@@ -15,5 +15,5 @@ interface DataSource {
 
     fun loadScrapGifs(): Flow<List<ScrapGifModel>>
 
-    fun setScrap(id: String, scrap: Boolean)
+    fun setScrap(model: ScrapGifModel, scrap: Boolean)
 }

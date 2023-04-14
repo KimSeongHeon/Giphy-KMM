@@ -54,6 +54,7 @@ kotlin {
 
                 //db
                 implementation(SharedDependencies.SqlDelight.RUNTIME)
+                implementation(SharedDependencies.SqlDelight.COROUTINEEXT)
             }
         }
         val commonTest by getting {
