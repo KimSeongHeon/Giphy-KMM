@@ -28,7 +28,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.Lifecycle
 import com.example.giphy_kmm.android.model.GifUiModel
 import com.example.giphy_kmm.android.viewmodel.GiphyViewModel
 import com.skydoves.landscapist.glide.GlideImage
@@ -46,14 +45,14 @@ fun GifContainerView(gifViewModel: GiphyViewModel) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        GifGridTitle(gifViewModel)
+        GifMainTitle(gifViewModel)
         GifSearchBox(gifViewModel)
         GifMainLayout(gifViewModel)
     }
 }
 
 @Composable
-fun GifGridTitle(viewModel: GiphyViewModel) {
+fun GifMainTitle(viewModel: GiphyViewModel) {
     //compose Text : https://developer.android.com/jetpack/compose/text
     val title by viewModel.gridTitle.observeAsState()
 
@@ -222,7 +221,7 @@ fun GifGridItems(viewModel: GiphyViewModel, index: Int, gifUiModel: GifUiModel) 
             .height(150.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
-                    onLongPress = {
+                    onDoubleTap = {
                         viewModel.addScrap(gifUiModel)
                         Toast
                             .makeText(context, "Complete Scrap!", Toast.LENGTH_SHORT)
