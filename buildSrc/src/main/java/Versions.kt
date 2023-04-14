@@ -8,6 +8,7 @@ object Versions {
     const val COMPOSE_UI_VERSION = "1.3.3"
     const val COMPOSE_VERSION = "1.4.0"
     const val GLIDE_VIERSION = "1.4.4"
+    const val COMPOSE_NAVIGATION = "2.5.3"
 
     const val KTX_CORE = "1.7.0"
     const val KTX_ACTIVITY_VERSION = "1.6.1"

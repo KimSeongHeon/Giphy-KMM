@@ -54,6 +54,7 @@ dependencies {
     implementation(AndroidDependencies.Compose.ACTIVITY_COMPOSE)
     implementation(AndroidDependencies.Compose.PREVIEW)
     implementation(AndroidDependencies.Compose.VIEWBINDING)
+    implementation(AndroidDependencies.Compose.NAVIGATION)
 
     //glide
     implementation(AndroidDependencies.Glide.COMPOSE_GLIDE)

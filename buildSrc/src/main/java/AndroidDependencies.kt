@@ -27,6 +27,7 @@ object AndroidDependencies {
             "androidx.activity:activity-compose:${Versions.COMPOSE_VERSION}"
         const val PREVIEW = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE_VERSION}"
         const val VIEWBINDING = "androidx.compose.ui:ui-viewbinding:${Versions.COMPOSE_VERSION}"
+        const val NAVIGATION = "androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION}"
     }
 
     object Glide {
