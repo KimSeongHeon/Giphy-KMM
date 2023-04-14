@@ -8,6 +8,7 @@ import comexamplegiphykmm.shared.AppDBQueries
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 class Database(private val databaseDriverFactory: DatabaseDriverFactory) {
@@ -22,14 +23,14 @@ class Database(private val databaseDriverFactory: DatabaseDriverFactory) {
     }
 
     internal fun loadScrapGifs(): Flow<List<ScrapGifModel>> {
-        return dbQuery.loadScrapLists { id, url, downsizedUrl ->
-            mapGifs(id, url, downsizedUrl)
+        return dbQuery.loadScrapLists { id, title, url, downsizedUrl ->
+            mapGifs(id, title, url, downsizedUrl)
         }.asFlow().mapToList()
     }
 
     internal fun setScrap(model: ScrapGifModel, scrap: Boolean) {
         if (scrap) {
-            dbQuery.insertScrapTable(model.id, model.url, model.downSizedUrl)
+            dbQuery.insertScrapTable(model.id, model.title, model.url, model.downSizedUrl)
         } else {
             dbQuery.deleteScrapTable(model.id)
         }
@@ -37,7 +38,8 @@ class Database(private val databaseDriverFactory: DatabaseDriverFactory) {
 
     private fun mapGifs(
         id: String,
+        title: String,
         url: String,
         downsizedUrl: String
-    ): ScrapGifModel = ScrapGifModel(id, url, downsizedUrl)
+    ): ScrapGifModel = ScrapGifModel(id, title, url, downsizedUrl)
 }
