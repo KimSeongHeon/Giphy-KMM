@@ -10,7 +10,7 @@ SELECT *
 FROM ScrapTable;
 
 insertScrapTable:
-INSERT INTO ScrapTable (id, title, url, downsizedUrl)
+INSERT OR IGNORE INTO ScrapTable (id, title, url, downsizedUrl)
 VALUES(?, ?,?, ?);
 
 deleteScrapTable:
