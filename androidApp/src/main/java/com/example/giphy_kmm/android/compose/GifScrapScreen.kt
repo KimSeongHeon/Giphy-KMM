@@ -89,7 +89,7 @@ fun GifScrapGridItems(viewModel: GiphyViewModel, gifUiModel: GifUiModel) {
             .height(150.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
-                    onLongPress = {
+                    onDoubleTap = {
                         viewModel.removeScrap(gifUiModel)
                         Toast.makeText(context, "Remove Scrap!", Toast.LENGTH_SHORT).show()
                     }
