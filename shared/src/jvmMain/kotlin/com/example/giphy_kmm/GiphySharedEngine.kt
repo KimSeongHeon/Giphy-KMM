@@ -25,4 +25,10 @@ actual class GiphySharedEngine {
 
     actual fun getAutoCompleteTerms(query: String): Flow<List<AutoCompleteEntity>> =
         repository.getAutoCompleteTerms(query)
+
+    actual fun getScrapGifs(): Flow<List<GifEntity>> = repository.getScrapGifs()
+
+    actual fun addScrap(gifEntity: GifEntity) = repository.addScrap(gifEntity)
+
+    actual fun removeScrap(gifEntity: GifEntity) = repository.removeScrap(gifEntity)
 }

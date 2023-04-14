@@ -10,4 +10,9 @@ expect class GiphySharedEngine {
     fun getGifFromSearchQuery(query: String, offset: Int): Flow<List<GifEntity>>
 
     fun getAutoCompleteTerms(query: String): Flow<List<AutoCompleteEntity>>
+
+    fun getScrapGifs(): Flow<List<GifEntity>>
+    fun addScrap(gifEntity: GifEntity)
+
+    fun removeScrap(gifEntity: GifEntity)
 }
