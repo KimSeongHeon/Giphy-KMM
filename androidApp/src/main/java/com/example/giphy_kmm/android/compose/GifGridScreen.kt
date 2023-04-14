@@ -1,5 +1,6 @@
 package com.example.giphy_kmm.android.compose
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
@@ -26,6 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
 import com.example.giphy_kmm.android.model.GifUiModel
 import com.example.giphy_kmm.android.viewmodel.GiphyViewModel
 import com.skydoves.landscapist.glide.GlideImage
@@ -35,6 +38,19 @@ import com.example.giphy_kmm.android.R
 private const val COLUMN_COUNT = 3
 private const val GIF_TEXT_FIELD_LABEL = "Search"
 private const val GIF_SEARCH_LIMIT_COUNT = 25
+
+
+@Composable
+fun GifContainerView(gifViewModel: GiphyViewModel) {
+    Column(
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        GifGridTitle(gifViewModel)
+        GifSearchBox(gifViewModel)
+        GifMainLayout(gifViewModel)
+    }
+}
 
 @Composable
 fun GifGridTitle(viewModel: GiphyViewModel) {
@@ -198,6 +214,7 @@ fun EndlessListHandler(listState: LazyGridState, buffer: Int, callback: () -> Un
 
 @Composable
 fun GifGridItems(viewModel: GiphyViewModel, index: Int, gifUiModel: GifUiModel) {
+    val context = LocalContext.current
     GlideImage(
         imageModel = gifUiModel.downsizedUrl,
         placeHolder = ImageVector.vectorResource(id = R.drawable.baseline_downloading_24),
@@ -206,7 +223,11 @@ fun GifGridItems(viewModel: GiphyViewModel, index: Int, gifUiModel: GifUiModel) 
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
-                        viewModel.downloadGif(gifUiModel.downsizedUrl, gifUiModel.title)
+                        viewModel.addScrap(gifUiModel)
+                        Toast
+                            .makeText(context, "Complete Scrap!", Toast.LENGTH_SHORT)
+                            .show()
+//                        viewModel.downloadGif(gifUiModel.downsizedUrl, gifUiModel.title)
                     }
                 )
             }

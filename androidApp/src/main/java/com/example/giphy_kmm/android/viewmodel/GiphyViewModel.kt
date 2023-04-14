@@ -9,6 +9,7 @@ import com.example.giphy_kmm.GiphySharedEngine
 import com.example.giphy_kmm.android.model.GifAutoCompleteUiModel
 import com.example.giphy_kmm.android.model.GifUiModel
 import com.example.giphy_kmm.data.SearchMode
+import com.example.giphy_kmm.domain.entity.GifEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.coroutines.Job
@@ -33,6 +34,9 @@ class GiphyViewModel @Inject constructor(
 
     private val _gifListStateFlow = MutableStateFlow<List<GifUiModel>>(listOf())
     val gifListStateFlow: StateFlow<List<GifUiModel>> get() = _gifListStateFlow
+
+    private val _scrapListStateFlow = MutableStateFlow<List<GifUiModel>>(listOf())
+    val scrapListStateFlow: StateFlow<List<GifUiModel>> get() = _scrapListStateFlow
 
     val searchQuery = mutableStateOf("")
     val autoTermsList = mutableStateListOf<GifAutoCompleteUiModel>()
@@ -81,16 +85,9 @@ class GiphyViewModel @Inject constructor(
 
     fun updateSearchQuery(query: String) {
         viewModelScope.launch {
-            randomApiJob?.cancelAndJoin()
-            queryApiJob?.cancelAndJoin()
-            autoCompleteApiJob?.cancelAndJoin()
+            clearAllPreviousJob()
 
-            _gifListStateFlow.emit(listOf())
-            autoTermsList.clear()
-
-            searchOffset = 0
             autoTermListShow.value = false
-
             searchQuery.value = query
             searchResult(query)
         }
@@ -110,6 +107,31 @@ class GiphyViewModel @Inject constructor(
         }
     }
 
+    fun getAllScraps() {
+        viewModelScope.launch {
+            giphyEngine.getScrapGifs()
+                .collect { newList ->
+                    val newUiModelList =
+                        newList.map { GifUiModel(it.id, it.title, it.url, it.downsizedUrl) }
+                    _scrapListStateFlow.emit(newUiModelList)
+                }
+        }
+    }
+
+    fun addScrap(model: GifUiModel) {
+        viewModelScope.launch {
+            val entity = GifEntity(model.id, model.title, model.url, model.downsizedUrl)
+            giphyEngine.addScrap(entity)
+        }
+    }
+
+    fun removeScrap(model: GifUiModel) {
+        viewModelScope.launch {
+            val entity = GifEntity(model.id, model.title, model.url, model.downsizedUrl)
+            giphyEngine.removeScrap(entity)
+        }
+    }
+
     fun swapSearchMode() {
         if (searchMode.value == SearchMode.DEBOUNCING) {
             this.searchMode.value = (SearchMode.THROTTLING)
@@ -126,7 +148,8 @@ class GiphyViewModel @Inject constructor(
                 .onEach { delay(API_CALL_DELAY) }
                 .flatMapConcat { giphyEngine.getRandomGif() }
                 .collect { entity ->
-                    val uiModel = GifUiModel(entity.title, entity.url, entity.downsizedUrl)
+                    val uiModel =
+                        GifUiModel(entity.id, entity.title, entity.url, entity.downsizedUrl)
                     _gifListStateFlow.emit(_gifListStateFlow.value + listOf(uiModel))
                 }
         }
@@ -141,7 +164,7 @@ class GiphyViewModel @Inject constructor(
             giphyEngine.getGifFromSearchQuery(query, searchOffset)
                 .collectLatest { newList ->
                     val newUiModelList =
-                        newList.map { GifUiModel(it.title, it.url, it.downsizedUrl) }
+                        newList.map { GifUiModel(it.id, it.title, it.url, it.downsizedUrl) }
                     _gifListStateFlow.emit(gifListStateFlow.value + newUiModelList)
                 }
         }
@@ -179,6 +202,17 @@ class GiphyViewModel @Inject constructor(
     // 새로운 이벤트가 들어온 후, 일정한 시간 간격(intervalDuration) 이 지난 후에 해당 간격 중 가장 마지막으로 들어온 이벤트를 발생시킨다.
     private fun searchResultByThrottle(query: String) {
         throttlingBehaviorSubject.onNext(query)
+    }
+
+    private suspend fun clearAllPreviousJob() {
+        randomApiJob?.cancelAndJoin()
+        queryApiJob?.cancelAndJoin()
+        autoCompleteApiJob?.cancelAndJoin()
+
+        _gifListStateFlow.emit(listOf())
+        autoTermsList.clear()
+
+        searchOffset = 0
     }
 
     fun downloadGif(url: String, fileName: String) = Unit
